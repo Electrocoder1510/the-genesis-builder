@@ -1,5 +1,17 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useMemo, useRef } from "react";
+
+function Particle({ p, progress, convergence }: { p: { x: number; y: number; d: number }; progress: MotionValue<number>; convergence: MotionValue<number> }) {
+  const x = useTransform(convergence, (v) => `${p.x * v}vw`);
+  const y = useTransform(convergence, (v) => `${p.y * v}vh`);
+  const opacity = useTransform(progress, [0, 0.9, 1], [0.6, 0.9, 0.2]);
+  return (
+    <motion.span
+      style={{ x, y, opacity, width: p.d, height: p.d }}
+      className="absolute rounded-full bg-[var(--color-accent)]"
+    />
+  );
+}
 
 export function Vision() {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,18 +39,9 @@ export function Vision() {
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-6">
         {/* converging particles */}
         <div aria-hidden className="absolute inset-0 flex items-center justify-center">
-          {particles.map((p) => {
-            const x = useTransform(convergence, (v) => `${p.x * v}vw`);
-            const y = useTransform(convergence, (v) => `${p.y * v}vh`);
-            const opacity = useTransform(scrollYProgress, [0, 0.9, 1], [0.6, 0.9, 0.2]);
-            return (
-              <motion.span
-                key={p.id}
-                style={{ x, y, opacity, width: p.d, height: p.d }}
-                className="absolute rounded-full bg-[var(--color-accent)]"
-              />
-            );
-          })}
+          {particles.map((p) => (
+            <Particle key={p.id} p={p} progress={scrollYProgress} convergence={convergence} />
+          ))}
           <motion.div
             style={{
               opacity: useTransform(scrollYProgress, [0.7, 1], [0, 1]),
