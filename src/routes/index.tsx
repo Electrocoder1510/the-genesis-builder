@@ -1,29 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Hero } from "@/components/portfolio/Hero";
+import { Message } from "@/components/portfolio/Message";
+import { Projects } from "@/components/portfolio/Projects";
+import { Journey } from "@/components/portfolio/Journey";
+import { Certifications } from "@/components/portfolio/Certifications";
+import { Achievements } from "@/components/portfolio/Achievements";
+import { Vision } from "@/components/portfolio/Vision";
+import { Contact } from "@/components/portfolio/Contact";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Alex — AI Builder, Developer, Creator" },
+      {
+        name: "description",
+        content:
+          "A storytelling portfolio of a young AI builder. Selected projects, journey, and what comes next.",
+      },
+      { property: "og:title", content: "Alex — AI Builder, Developer, Creator" },
+      {
+        property: "og:description",
+        content: "Technology isn't what excites me. Creating things that didn't exist yesterday does.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="relative bg-[#0B0D0F] text-foreground antialiased">
+      <Hero name="Alex" />
+      <Message />
+      <Projects />
+      <Journey />
+      <Certifications />
+      <Achievements />
+      <Vision />
+      <Contact />
+    </main>
   );
 }
