@@ -24,9 +24,12 @@ const FLOW_SNIPPETS = [
 export function Hero({ name = "Alex" }: { name?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.1]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.15]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.6, 0]);
+  // Start slightly zoomed in, then zoom OUT as the user scrolls — stops at 0.7 (not fully gone)
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1.15, 0.7]);
+  const frameOpacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 1, 0]);
+
 
   // Flowing code lines across the face — random vertical positions, varied speeds
   const flows = useMemo(
@@ -47,13 +50,14 @@ export function Hero({ name = "Alex" }: { name?: string }) {
   return (
     <section ref={ref} className="relative h-[180vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#05070a]">
-        {/* Full-bleed portrait */}
-        <motion.img
-          src={portrait}
-          alt="Portrait"
-          style={{ scale: imgScale, y }}
-          className="absolute inset-0 size-full object-cover"
-        />
+        {/* Full-bleed portrait — zooms OUT on scroll, stops at a comfortable size */}
+        <motion.div
+          style={{ scale: imgScale, y, opacity: frameOpacity }}
+          className="absolute inset-0"
+        >
+          <img src={portrait} alt="Portrait" className="size-full object-cover" />
+        </motion.div>
+
 
         {/* Subtle vignette + cyan wash to unify with brand */}
         <div
