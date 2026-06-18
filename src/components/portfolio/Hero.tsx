@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useMemo, useRef } from "react";
 import portrait from "@/assets/portrait.jpg";
+import { CursorFluid } from "./CursorFluid";
 import { Typewriter } from "./Typewriter";
+
 
 const FLOW_SNIPPETS = [
   "const idea = await build();",
@@ -81,6 +83,10 @@ export function Hero({ name = "Alex" }: { name?: string }) {
             }}
           />
           <div aria-hidden className="absolute inset-0 grid-bg opacity-[0.08]" />
+
+          {/* Cursor-reactive fluid — sits in the background, behind text & code */}
+          <CursorFluid />
+
 
           {/* Flowing code lines */}
           <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
