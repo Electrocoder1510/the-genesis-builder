@@ -132,3 +132,13 @@
   50% { opacity: 1; }
 }
 .pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+
+@keyframes flow-ltr {
+  from { transform: translateX(-30vw); }
+  to   { transform: translateX(130vw); }
+}
+@keyframes flow-rtl {
+  from { transform: translateX(130vw); }
+  to   { transform: translateX(-30vw); }
+}
+
